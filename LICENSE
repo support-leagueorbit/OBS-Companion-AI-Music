@@ -1,0 +1,46 @@
+AI Music: Freeware Licence
+
+Copyright (c) 2026 LeagueOrbit. All rights reserved.
+
+AI Music ("the Software") is free of charge. This licence lets you use it; it does not sell
+or transfer the Software to you.
+
+1. You may
+   a. download, install and run the Software on any number of your own computers, for
+      personal or commercial purposes;
+   b. use the music the Software makes for any purpose, including live streams, videos,
+      podcasts, games and recordings, and earn money from them (see section 3);
+   c. share unchanged copies of the official downloads (the release files with their
+      original names and checksums), as long as you do not charge for them.
+
+2. You may not
+   a. sell, rent, lease, sublicense or otherwise charge for the Software, or include it in
+      a product or service that is sold;
+   b. modify, translate, adapt or make derivative works of the Software;
+   c. reverse engineer, decompile or disassemble the Software, except where the law
+      expressly allows it despite this restriction;
+   d. remove or change any copyright notice, licence or credit in the Software or its
+      downloads;
+   e. present the Software as your own work, or distribute changed copies of it.
+
+3. Music you make
+   The music is composed by the Software on your computer. LeagueOrbit claims no copyright
+   in it and places no limits on how you use it. You are responsible for anything you add
+   to it (for example, your own recordings or samples).
+
+4. Third-party content
+   The optional recorded instrument sounds and some compiled-in components come from third
+   parties under their own licences (mostly CC0 public domain). They are listed in
+   THIRD_PARTY_NOTICES.md and the licenses folder. Those licences apply to those parts and
+   nothing in this licence limits rights they grant you.
+
+5. No warranty
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+   INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+   PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL LEAGUEORBIT BE LIABLE FOR ANY CLAIM,
+   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF IT OR OTHER DEALINGS IN IT.
+
+6. Ending
+   This licence ends automatically if you break it. You must then delete your copies.
+   Sections 3 and 5 continue to apply.

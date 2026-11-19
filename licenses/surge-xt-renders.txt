@@ -1,0 +1,35 @@
+Surge XT recordings (sound folders surge-*)
+==========================================
+
+These instruments are audio recorded note by note from Surge XT 1.3.4, the free and open
+source synthesizer (https://surge-synthesizer.github.io/, source
+https://github.com/surge-synthesizer/surge, GPL-3.0-or-later), playing its own factory
+patches. Surge XT was built from its official 1.3.4 source release and played through its
+Python module. No Surge XT code or patch file is distributed with AI Music; only the
+recorded WAV files and AI Music's own SFZ key maps.
+
+The GPL covers the program, not the sound it produces: audio made by playing a GPL
+synthesizer is the player's own output (GNU GPL FAQ, "Is there some way that I can GPL
+the output people get from use of my program?"). The recorded notes are therefore
+distributed with AI Music under its own terms, with this credit.
+
+Recording: 48 kHz, 24-bit stereo, one note every three semitones at one to three
+velocities, with the patches' reverb and delay switched off (AI Music adds its own room).
+Each instrument is normalised as a whole, so velocity differences are kept.
+
+Folder            Surge XT factory patch                     Notes
+surge-ep1         Keys/EP 1                                   warm tine electric piano
+surge-dxep        Keys/DX EP                                  FM electric piano
+surge-brass1      Brass/Synth Brass 1                         warm analog brass
+surge-jx-brass    Brass/JX-10 Double Brass                    bright brass with an octave below
+surge-juno-str    Polysynths/Juno-60 Strings                  string machine
+surge-warm-pad    Pads/MKS-70 Warm Pad                        played an octave up (patch sounds an octave low)
+surge-choir       Pads/Synth Choir MW O-Ah                    synth choir
+surge-moog-lead   Leads/Moogy Saw                             analog mono lead
+surge-talky       Leads/Talky 1 MW                            vowel-filtered lead
+surge-rubber-bass Basses/Rubber Bass                          played an octave up (patch sounds an octave low)
+surge-smooth-stab Polysynths/Smooth Stabs                     soft chord stab
+surge-house-organ Keys/House Organ                            played two octaves up (patch sounds two octaves low)
+
+Checksums of the recorded files: surge-xt-renders-wav.sha256.
+Surge XT: Copyright the Surge Synth Team and contributors (see its AUTHORS file).
