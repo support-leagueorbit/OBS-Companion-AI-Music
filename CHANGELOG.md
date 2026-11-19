@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.2
+
+Sound improvements. Nothing to change in your setup; sound packs from sounds-v1 work as before.
+
+- Drums: recorded drum hits start exactly on the beat (some snares were up to 13 ms late, which made the backbeat drag), and the lo-fi snare is no longer buried under the kick.
+- Snare in band styles: in Rock, Blues, R&B and Soft Rock the guitars, keys and sax make room for the snare on each backbeat, and the rock, studio and soul kits have a crisper snare, so the backbeat cuts through.
+- Melody focus: the lo-fi and jazz melodies sit clearly over the chords.
+- Legato: string and wind melodies connect from note to note like a player instead of stopping and restarting, most noticeably in Cinematic and on the flute and saxophone.
+- Mix: less boxy low mids in lo-fi, and lo-fi and jazz move a little more between quiet and full sections.
+
 ## 0.3.1
 
 Sound improvements. Nothing to change in your setup; sound packs from sounds-v1 work as before.
