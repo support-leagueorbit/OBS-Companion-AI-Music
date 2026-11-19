@@ -28,25 +28,17 @@ Button names below are the text you will see on screen.
 
 ## Install on Windows
 
-### With the one-line installer
-
-1. Open **PowerShell**: press the Windows key, type `PowerShell`, and press Enter.
-2. Paste this line and press Enter:
+1. Download `ai-music-windows-x64.exe` and `SHA256SUMS` from the [latest release](https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest).
+2. Check the file before you run it. Open **PowerShell** (press the Windows key, type `PowerShell`, press Enter) and run:
 
    ```powershell
-   irm https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/install.ps1 | iex
+   cd "$HOME\Downloads"
+   $want = ((Select-String -Path SHA256SUMS -Pattern ' ai-music-windows-x64\.exe$').Line -split ' ')[0]
+   $got = (Get-FileHash .\ai-music-windows-x64.exe -Algorithm SHA256).Hash.ToLower()
+   if ($got -eq $want) { "Checksum OK" } else { "CHECKSUM MISMATCH: do not run this file. Delete it and download it again." }
    ```
 
-3. It downloads AI Music, checks the checksum, installs it for your Windows account, and opens it.
-
-To install sound packs at the same time, put `$env:AI_MUSIC_SOUNDS = "all";` (or a list such as `"piano,drums"`) in front of the line. See [Sound packs](#sound-packs).
-
-To also have AI Music start when you sign in, put `$env:AI_MUSIC_RUN_AT_LOGIN = "1";` in front of the line.
-
-### By hand
-
-1. Download `ai-music-windows-x64.exe` from the [latest release](https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest).
-2. Optional: check the file. In PowerShell, in your Downloads folder, run `Get-FileHash .\ai-music-windows-x64.exe`. The long code it prints must match the line for that file in the release's `SHA256SUMS`.
+   Go on only if it prints `Checksum OK`. (The [README](../README.md#install) has the same steps with the downloads included.)
 3. Double-click the file. If Windows shows **Windows protected your PC**, click **More info**, then **Run anyway** (see [why](../README.md#windows-protected-your-pc--unknown-publisher)). AI Music opens and works straight away.
 4. To install it properly (Start menu entry, uninstall from Settings), open a Command Prompt in the Downloads folder and run:
 
@@ -62,28 +54,14 @@ AI Music is then in the Start menu (search for **AI Music**). The app goes into 
 
 ## Install on macOS or Linux
 
-### With the one-line installer
-
-Open **Terminal**, paste this line and press Enter:
-
-```sh
-curl -fsSL https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/install.sh | sh
-```
-
-It installs `ai-music` into `~/.local/bin` and checks its checksum. To pick another folder, put `AI_MUSIC_INSTALL_DIR=/path/to/folder` before `sh`. To add sound packs, put `AI_MUSIC_SOUNDS=all` (or `AI_MUSIC_SOUNDS=piano,drums`) before `sh`.
-
-Then start it:
-
-```sh
-~/.local/bin/ai-music
-```
-
-It opens AI Music in your web browser. Leave the Terminal window open while you use it, or run `ai-music serve -headless &` to keep it in the background. If `~/.local/bin` is on your `PATH`, plain `ai-music` works.
-
-### By hand
-
 1. Download the file for your computer from the [latest release](https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest): `ai-music-macos-arm64` (Apple silicon), `ai-music-macos-x64` (Intel Mac), `ai-music-linux-x64` or `ai-music-linux-arm64`.
-2. Optional: check it with `shasum -a 256 ai-music-macos-arm64` (macOS) or `sha256sum ai-music-linux-x64` (Linux), and compare with `SHA256SUMS`.
+2. Download `SHA256SUMS` from the same release into the same folder, and check the file before you run it (use your file's name):
+
+   ```sh
+   grep " ai-music-macos-arm64\$" SHA256SUMS | shasum -a 256 -c -
+   ```
+
+   Go on only if it prints `OK`. On Linux, `sha256sum -c -` works in place of `shasum -a 256 -c -`.
 3. Make it runnable and start it: `chmod +x ai-music-macos-arm64 && ./ai-music-macos-arm64`.
 4. On macOS, if it says the developer cannot be verified: right-click the file in Finder, choose **Open**, then **Open** again. Or run `xattr -d com.apple.quarantine ai-music-macos-arm64` once.
 
@@ -110,21 +88,7 @@ All packs are in the [sound packs release](https://github.com/support-leagueorbi
 | `winds` | Alto and tenor saxophone, recorder, harmonica, pipe organ | about 0.55 GB |
 | `synths` | Recorded analog-style synths: brass, string machine, pads, choir, leads, bass, chord stabs | about 0.15 GB |
 
-### Add packs with the installer
-
-Run the one-line installer again with `AI_MUSIC_SOUNDS` set:
-
-```powershell
-$env:AI_MUSIC_SOUNDS = "piano,drums,bass"; irm https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/install.ps1 | iex
-```
-
-```sh
-curl -fsSL https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/install.sh | AI_MUSIC_SOUNDS=piano,drums,bass sh
-```
-
-`all` installs every pack. Each pack is checked against `SHA256SUMS` before it is installed. Restart AI Music afterwards (tray icon, **Quit**, then open it again) so it loads the new sounds.
-
-### Add packs by hand
+### Add packs
 
 1. Download the pack zip, for example `ai-music-sounds-piano-1.zip`, and the `SHA256SUMS` file from the [sound packs release](https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/tag/sounds-v1).
 2. Open AI Music and click **Sound library**.
@@ -133,7 +97,7 @@ curl -fsSL https://github.com/support-leagueorbit/OBS-Companion-AI-Music/release
 5. Into **Or a file on this computer**, type the full path of the zip, for example `C:\Users\YourName\Downloads\ai-music-sounds-piano-1.zip`.
 6. Click **Install from file**. The line under the buttons shows progress, and ends with **Installed … files. New instruments are ready.**
 
-You can also do this from a terminal: `ai-music sounds install -file ai-music-sounds-piano-1.zip -sha256 <checksum>`.
+You can also do this from a terminal: `ai-music sounds install -file ai-music-sounds-piano-1.zip -sha256 <checksum>`. The [README](../README.md#sound-packs) has the PowerShell commands that download a pack and read its checksum for you. AI Music checks the zip against the checksum before it installs anything.
 
 If a checksum does not match, nothing is installed and the message says **checksum mismatch**. Download the file again.
 
@@ -196,13 +160,13 @@ On Windows (and on Linux desktops with a system tray), closing the AI Music wind
 
 ## Update
 
-Run the one-line installer again, or download the new file and run `ai-music-windows-x64.exe install` again. Your styles, settings and sound packs stay. Quit AI Music from the tray icon first, so the new version starts cleanly.
+Download the new file and `SHA256SUMS`, check the file as in [Install on Windows](#install-on-windows), and run `ai-music-windows-x64.exe install` again. Your styles, settings and sound packs stay. Quit AI Music from the tray icon first, so the new version starts cleanly.
 
 ## Uninstall
 
 **Windows:** open **Settings**, **Apps**, **Installed apps**, find **AI Music**, click the three dots, then **Uninstall**. A box asks whether to also delete your saved styles, settings and sound packs. **No** keeps them for a later reinstall; **Yes** deletes them. If it is not listed, run `"%LOCALAPPDATA%\Programs\AI Music\ai-music.exe" uninstall`.
 
-**macOS / Linux:** delete the `ai-music` file (from `~/.local/bin` if you used the installer). To remove styles, settings and sound packs too, delete the data folder (see [below](#where-ai-music-keeps-its-files)).
+**macOS / Linux:** delete the `ai-music` file (for example `ai-music-macos-arm64` in your Downloads folder, or wherever you moved it). To remove styles, settings and sound packs too, delete the data folder (see [below](#where-ai-music-keeps-its-files)).
 
 ## If something goes wrong
 

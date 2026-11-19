@@ -26,8 +26,6 @@ AI Music also works on its own with any OBS setup (Browser Source or Media Sourc
 
 ## Install
 
-### Option 1: download
-
 Download from the [latest release](https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest):
 
 | Your computer | File |
@@ -38,37 +36,48 @@ Download from the [latest release](https://github.com/support-leagueorbit/OBS-Co
 | Linux, 64-bit PC | `ai-music-linux-x64` |
 | Linux, ARM 64-bit | `ai-music-linux-arm64` |
 
-On Windows, double-click the file to try it, or install it by running `ai-music-windows-x64.exe install` (see the [user guide](docs/USER-GUIDE.md)). Each release has a `SHA256SUMS` file to check your download against.
+Each release has a `SHA256SUMS` file. Check your download against it before you run it. The commands below download the app and the checksums, check the file, and only then run it. They are the same steps the [user guide](docs/USER-GUIDE.md) explains one by one.
+
+**Windows** (PowerShell, in your Downloads folder):
+
+```powershell
+cd "$HOME\Downloads"
+$ProgressPreference = 'SilentlyContinue'
+$base = "https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download"
+Invoke-WebRequest "$base/ai-music-windows-x64.exe" -OutFile ai-music-windows-x64.exe -UseBasicParsing
+Invoke-WebRequest "$base/SHA256SUMS" -OutFile SHA256SUMS -UseBasicParsing
+$want = ((Select-String -Path SHA256SUMS -Pattern ' ai-music-windows-x64\.exe$').Line -split ' ')[0]
+$got = (Get-FileHash .\ai-music-windows-x64.exe -Algorithm SHA256).Hash.ToLower()
+if ($got -eq $want) { "Checksum OK" } else { "CHECKSUM MISMATCH: do not run this file. Delete it and download it again." }
+```
+
+If it prints `Checksum OK`, install it for your Windows account (Start menu entry, uninstall from Settings):
+
+```powershell
+.\ai-music-windows-x64.exe install
+```
+
+**macOS / Linux** (Terminal). Use the file name for your computer from the table, for example `ai-music-macos-arm64`:
+
+```sh
+cd ~/Downloads
+f=ai-music-macos-arm64
+curl -fLO https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/$f
+curl -fLO https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/SHA256SUMS
+grep " $f\$" SHA256SUMS | shasum -a 256 -c -
+```
+
+If it prints `OK`, make it runnable and start it:
+
+```sh
+chmod +x "$f" && ./"$f"
+```
+
+On Linux, `sha256sum -c -` works in place of `shasum -a 256 -c -`.
+
+To update later, quit AI Music (tray icon, **Quit**) and repeat the same steps with the new release.
 
 The recorded instrument sounds are optional, and come from the [sound packs release](https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/tag/sounds-v1). Without them, AI Music uses its built-in synthesised instruments.
-
-### Option 2: one line in a terminal
-
-These scripts download only from this project's GitHub Releases, and check every file against the release's SHA-256 checksums before using it.
-
-**Windows** (PowerShell):
-
-```powershell
-irm https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/install.ps1 | iex
-```
-
-**macOS / Linux** (Terminal):
-
-```sh
-curl -fsSL https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/install.sh | sh
-```
-
-To add recorded sounds at the same time, set `AI_MUSIC_SOUNDS` to `all`, or to a list of packs such as `piano,drums,guitar-acoustic`:
-
-```powershell
-$env:AI_MUSIC_SOUNDS = "all"; irm https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/install.ps1 | iex
-```
-
-```sh
-curl -fsSL https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/latest/download/install.sh | AI_MUSIC_SOUNDS=all sh
-```
-
-You can run the same line again later to update, or to add more packs. The [user guide](docs/USER-GUIDE.md#sound-packs) lists every pack and its size.
 
 ## Sound packs
 
@@ -89,11 +98,22 @@ AI Music plays every style with its built-in synthesised instruments. The option
 | `winds` | Alto and tenor saxophone, recorder, harmonica, pipe organ | about 0.55 GB |
 | `synths` | Recorded analog-style synths: brass, strings, pads, choir, leads, bass, stabs | about 0.15 GB |
 
-There are three ways to install them:
+There are two ways to install them. Both check the zip against the release's `SHA256SUMS` before anything is installed:
 
-- **With the one-line installer.** Set `AI_MUSIC_SOUNDS` as shown above. The installer checks each zip against the release's `SHA256SUMS` before it installs it.
 - **From the app.** Open **Sound library**, paste the zip's checksum from `SHA256SUMS`, type the zip's path, and click **Install from file**. Restart AI Music afterwards so it loads the new sounds.
-- **From a terminal.** Run `ai-music sounds install -file ai-music-sounds-piano-1.zip -sha256 <checksum>`.
+- **From a terminal** (Windows PowerShell, after installing the app; replace `piano` with the pack you want):
+
+  ```powershell
+  cd "$HOME\Downloads"
+  $ProgressPreference = 'SilentlyContinue'
+  $s = "https://github.com/support-leagueorbit/OBS-Companion-AI-Music/releases/download/sounds-v1"
+  Invoke-WebRequest "$s/ai-music-sounds-piano-1.zip" -OutFile ai-music-sounds-piano-1.zip -UseBasicParsing
+  Invoke-WebRequest "$s/SHA256SUMS" -OutFile SOUNDS-SHA256SUMS -UseBasicParsing
+  $sum = ((Select-String -Path SOUNDS-SHA256SUMS -Pattern ' ai-music-sounds-piano-1\.zip$').Line -split ' ')[0]
+  & "$env:LOCALAPPDATA\Programs\AI Music\ai-music.exe" sounds install -file ai-music-sounds-piano-1.zip -sha256 $sum
+  ```
+
+  On macOS or Linux: `./ai-music-macos-arm64 sounds install -file ai-music-sounds-piano-1.zip -sha256 <checksum>`, with the checksum from the zip's line in the sound packs' `SHA256SUMS`.
 
 Packs install side by side, and you can add more at any time. Instruments that need a pack you don't have are greyed out in the app. The [user guide](docs/USER-GUIDE.md#sound-packs) has the details.
 
@@ -101,9 +121,9 @@ Packs install side by side, and you can add more at any time. Instruments that n
 
 AI Music is free, and its builds are not code-signed, because a signing certificate is a paid yearly service. So when you open a downloaded copy, Windows SmartScreen may show **Windows protected your PC** or **Unknown publisher**. This is Windows saying it does not recognise the publisher. It is not saying the file is harmful.
 
-To check that your copy is the real one, compare its SHA-256 checksum with the `SHA256SUMS` file of the release. In PowerShell, run `Get-FileHash .\ai-music-windows-x64.exe`. The one-line installer does this check for you. If the checksums match, click **More info**, then **Run anyway**.
+To check that your copy is the real one, compare its SHA-256 checksum with the `SHA256SUMS` file of the release. The commands under [Install](#install) do this check. If the checksums match, click **More info**, then **Run anyway**.
 
-On macOS, a downloaded file may be blocked with "cannot be opened because the developer cannot be verified". Right-click the file and choose **Open**, or use the one-line installer, which does not trigger this.
+On macOS, a downloaded file may be blocked with "cannot be opened because the developer cannot be verified". Right-click the file and choose **Open**. A file downloaded with `curl`, as under [Install](#install), is not blocked this way.
 
 ## Help
 

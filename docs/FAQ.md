@@ -18,7 +18,7 @@ Only to download the app and, if you want them, the sound packs. After that it r
 
 ### Why does Windows say "unknown publisher" or "Windows protected your PC"?
 
-The builds are not code-signed, because signing certificates cost money every year and AI Music is free. Check your download against the release's `SHA256SUMS` (the one-line installer does this for you), then click **More info** and **Run anyway**. See the [README](../README.md#windows-protected-your-pc--unknown-publisher) for details.
+The builds are not code-signed, because signing certificates cost money every year and AI Music is free. Check your download against the release's `SHA256SUMS` (the [install steps](../README.md#install) show the exact commands), then click **More info** and **Run anyway**. See the [README](../README.md#windows-protected-your-pc--unknown-publisher) for details.
 
 ### Do I need the sound packs?
 
