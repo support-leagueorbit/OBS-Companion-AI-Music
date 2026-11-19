@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.3
+
+Fixes. Nothing to change in your setup; sound packs from sounds-v1 work as before.
+
+- Uninstall: removing a second copy of AI Music (for example one installed into another folder) no longer removes the start-with-Windows setting or the Apps & features entry of the copy you keep.
+- Memory: when you press Next or change style while a tune is waiting to start, the waiting tune's parts are freed before the new one renders, and the next tune renders in the background on fewer threads. Peak memory in a long session is about a quarter lower. The music is unchanged.
+
 ## 0.3.2
 
 Sound improvements. Nothing to change in your setup; sound packs from sounds-v1 work as before.
